@@ -248,7 +248,7 @@ contract ERC721 is Pausable, ERC165 {
         require(msg.sender == _owner, "Only contract owner can mint new tokens");
 
         // TODO revert if given tokenId already exists or given address is invalid
-        require(_exists(tokenId), "Caanot mint - Token ID already exists");
+        require(_exists(tokenId), "Canot mint - Token ID already exists");
         require(isValidAddress(to), "Cannot mint - Given 'to' address is not valid");
 
         // TODO mint tokenId to given address & increase token count of owner
@@ -486,7 +486,7 @@ contract ERC721Metadata is ERC721Enumerable, usingOraclize {
     // TODO: Create private vars for token _name, _symbol, and _baseTokenURI (string)
     string private _name;
     string private _symbol;
-    string private _baeTokenURI;
+    string private _baseTokenURI;
 
     // TODO: create private mapping of tokenId's to token uri's called '_tokenURIs'
     mapping (int256 => string) private _tokenURIs;
@@ -530,22 +530,52 @@ contract ERC721Metadata is ERC721Enumerable, usingOraclize {
 
 
     // TODO: Create an internal function to set the tokenURI of a specified tokenId
-    // It should be the _baseTokenURI + the tokenId in string form
-    // TIP #1: use strConcat() from the imported oraclizeAPI lib to set the complete token URI
-    // TIP #2: you can also use uint2str() to convert a uint to a string
-        // see https://github.com/oraclize/ethereum-api/blob/master/oraclizeAPI_0.5.sol for strConcat()
-    // require the token exists before setting
+    function _setTokenURI(uint256 tokenId) internal returns (string memory){
+        // The URI should be the _baseTokenURI + the tokenId in string form
+        // TIP #1: use strConcat() from the imported oraclizeAPI lib to set the complete token URI
+        // TIP #2: you can also use uint2str() to convert a uint to a string
+            // see https://github.com/oraclize/ethereum-api/blob/master/oraclizeAPI_0.5.sol for strConcat()
+
+        // require the token exists before setting
+        require(_exists(tokenId), "Cannot generate a URI for a token that does not exsist");
+
+        string memory tokenIdStr = uint2str(tokenId);
+        string memory tokenURIStr =  strConcat(_baseTokenURI, tokenIdStr);
+        _tokenURIs[tokenId] = tokenURIStr;
+
+        return tokenURIStr;
+
+    }
+    
 
 }
 
 //  TODO's: Create CustomERC721Token contract that inherits from the ERC721Metadata contract. You can name this contract as you please
-//  1) Pass in appropriate values for the inherited ERC721Metadata contract
-//      - make the base token uri: https://s3-us-west-2.amazonaws.com/udacity-blockchain/capstone/
-//  2) create a public mint() that does the following:
-//      -can only be executed by the contract owner
-//      -takes in a 'to' address, tokenId, and tokenURI as parameters
-//      -returns a true boolean upon completion of the function
-//      -calls the superclass mint and setTokenURI functions
+contract CapstoneTokenMetadata is CustomERC721Token{
+    //  1) Pass in appropriate values for the inherited ERC721Metadata contract
+    //      - make the base token uri: https://s3-us-west-2.amazonaws.com/udacity-blockchain/capstone/
+    constructor() public {
+        _name = "Capstone Token";
+        _symbol = "CPST";
+        _baseTokenURI = "https://s3-us-west-2.amazonaws.com/udacity-blockchain/capstone/";
+
+        _registerInterface(_INTERFACE_ID_CAPSTONE_METADATA);
+    }
+
+    //  2) create a public mint() that does the following:
+    //      -can only be executed by the contract owner
+    //      -takes in a 'to' address, tokenId, and tokenURI as parameters
+    //      -returns a true boolean upon completion of the function
+    //      -calls the superclass mint and setTokenURI functions
+
+    function mint(address to, uint256 tokenId, string memory tokenURI) public onlyOwner returns (bool){
+        super._mint(to, tokenId);
+        super.setTokenURI(tokenId);
+        return true;
+    }
+
+}
+
 
 
 
