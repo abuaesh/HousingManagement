@@ -552,11 +552,15 @@ contract ERC721MintableComplete is ERC721Metadata{
 
     //  1) Pass in appropriate values for the inherited ERC721Metadata contract
     //      - make the base token uri: https://s3-us-west-2.amazonaws.com/udacity-blockchain/capstone/
-    constructor() public {
-        this._name = "Complete Mintable Token";
-        this._symbol = "CMPT";
-        this._baseTokenURI = "https://s3-us-west-2.amazonaws.com/udacity-blockchain/capstone/";
-
+    constructor()
+            ERC721MintableComplete
+            (
+                "Complete Mintable Token",
+                "CMPT",
+                "https://s3-us-west-2.amazonaws.com/udacity-blockchain/capstone/"
+            )
+            public
+    {
         _registerInterface(_INTERFACE_ID_CAPSTONE_METADATA);
     }
 
