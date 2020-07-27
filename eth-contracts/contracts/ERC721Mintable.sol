@@ -12,7 +12,7 @@ contract Ownable {
     address private _owner;
     //  2) create an internal constructor that sets the _owner var to the creater of the contract 
     constructor() public {
-        owner = msg.sender;
+        _owner = msg.sender;
     }
     //  3) create an 'onlyOwner' modifier that throws if called by any account other than the owner.
     modifier onlyOwner() {
@@ -32,13 +32,9 @@ contract Ownable {
 
     }
 
-    // Function to check that the given address is a valid Ethereum address        
+    // Function to check that the given address is a real address        
     function isValidAddress(address _address) public pure returns (bool){  
-        /* Hint:
-            web3.utils.isAddress(): Checks if a given string is a valid Ethereum address.
-            It will also check the checksum, if the address has upper and lowercase letters.
-        */
-        return web3.utils.isAddress(_address);
+        return _address != address(0); //Address should not be all zero
     }
 }
 
@@ -98,14 +94,14 @@ contract ERC165{
     /**
      * @dev implement supportsInterface(bytes4) using a lookup table
      */
-    function supportsInterface(bytes4 interfaceId) external view whenNotPaused returns (bool) {
+    function supportsInterface(bytes4 interfaceId) external view  returns (bool) {
         return _supportedInterfaces[interfaceId];
     }
 
     /**
      * @dev internal method for registering an interface
      */
-    function _registerInterface(bytes4 interfaceId) internal whenNotPaused{
+    function _registerInterface(bytes4 interfaceId) internal {
         require(interfaceId != 0xffffffff);
         _supportedInterfaces[interfaceId] = true;
     }
@@ -153,7 +149,7 @@ contract ERC721 is Pausable, ERC165 {
         // TODO return the token balance of given address
         // TIP: remember the functions to use for Counters. you can refresh yourself with the link above
 
-        return _ownedTokensCount[owner];
+        return _ownedTokensCount[owner]._value;
     }
 
     function ownerOf(uint256 tokenId) public view whenNotPaused returns (address) {
@@ -161,7 +157,7 @@ contract ERC721 is Pausable, ERC165 {
         return _tokenOwner[tokenId];
     }
 
-//    @dev Approves another address to transfer the given token ID
+    //    @dev Approves another address to transfer the given token ID
     function approve(address to, uint256 tokenId) public whenNotPaused {
         // TODO require the given address to not be the owner of the tokenId
         require(to != ownerOf(tokenId), "This address is already the owner");
@@ -243,9 +239,9 @@ contract ERC721 is Pausable, ERC165 {
 
     // @dev Internal function to mint a new token
     // TIP: remember the functions to use for Counters. you can refresh yourself with the link above
-    function _mint(address to, uint256 tokenId) internal whenNotPaused {
+    function _mint(address to, uint256 tokenId) internal whenNotPaused onlyOwner{
 
-        require(msg.sender == _owner, "Only contract owner can mint new tokens");
+        //require(msg.sender == super.(super._owner), "Only contract owner can mint new tokens");
 
         // TODO revert if given tokenId already exists or given address is invalid
         require(_exists(tokenId), "Canot mint - Token ID already exists");
@@ -267,7 +263,7 @@ contract ERC721 is Pausable, ERC165 {
         require(_isApprovedOrOwner(from, tokenId), "Only owner of token, or approved address can transfer");
 
         // TODO: require token is being transfered to valid address
-        require(isValidAddress(to), "Token recepient address is not a valid address")
+        require(isValidAddress(to), "Token recepient address is not a valid address");
         
         // TODO: clear approval
         _clearApproval(tokenId);
@@ -525,7 +521,7 @@ contract ERC721Metadata is ERC721Enumerable, usingOraclize {
 
     function tokenURI(uint256 tokenId) external view returns (string memory) {
         require(_exists(tokenId));
-        return _tokenURIs[tokenId];
+        return _tokenURIs[int256(tokenId)];
     }
 
 
@@ -541,7 +537,7 @@ contract ERC721Metadata is ERC721Enumerable, usingOraclize {
 
         string memory tokenIdStr = uint2str(tokenId);
         string memory tokenURIStr =  strConcat(_baseTokenURI, tokenIdStr);
-        _tokenURIs[tokenId] = tokenURIStr;
+        _tokenURIs[int256(tokenId)] = tokenURIStr;
 
         return tokenURIStr;
 
@@ -551,13 +547,15 @@ contract ERC721Metadata is ERC721Enumerable, usingOraclize {
 }
 
 //  TODO's: Create CustomERC721Token contract that inherits from the ERC721Metadata contract. You can name this contract as you please
-contract CapstoneTokenMetadata is CustomERC721Token{
+contract ERC721MintableComplete is ERC721Metadata{
+    bytes4 private constant _INTERFACE_ID_CAPSTONE_METADATA = 0x01ffc9a9;
+
     //  1) Pass in appropriate values for the inherited ERC721Metadata contract
     //      - make the base token uri: https://s3-us-west-2.amazonaws.com/udacity-blockchain/capstone/
     constructor() public {
-        _name = "Capstone Token";
-        _symbol = "CPST";
-        _baseTokenURI = "https://s3-us-west-2.amazonaws.com/udacity-blockchain/capstone/";
+        this._name = "Complete Mintable Token";
+        this._symbol = "CMPT";
+        this._baseTokenURI = "https://s3-us-west-2.amazonaws.com/udacity-blockchain/capstone/";
 
         _registerInterface(_INTERFACE_ID_CAPSTONE_METADATA);
     }
