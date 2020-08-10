@@ -553,7 +553,7 @@ contract ERC721MintableComplete is ERC721Metadata{
     //  1) Pass in appropriate values for the inherited ERC721Metadata contract
     //      - make the base token uri: https://s3-us-west-2.amazonaws.com/udacity-blockchain/capstone/
     constructor()
-            ERC721MintableComplete
+            ERC721Metadata
             (
                 "Complete Mintable Token",
                 "CMPT",
@@ -567,12 +567,13 @@ contract ERC721MintableComplete is ERC721Metadata{
     //  2) create a public mint() that does the following:
     //      -can only be executed by the contract owner
     //      -takes in a 'to' address, tokenId, and tokenURI as parameters
+    //      --removed parameter tokenURI, coz it will be created by super._setTokenURI
     //      -returns a true boolean upon completion of the function
     //      -calls the superclass mint and setTokenURI functions
 
-    function mint(address to, uint256 tokenId, string memory tokenURI) public onlyOwner returns (bool){
+    function mint(address to, uint256 tokenId) public onlyOwner returns (bool){
         super._mint(to, tokenId);
-        super.setTokenURI(tokenId);
+        super._setTokenURI(tokenId);
         return true;
     }
 
