@@ -222,7 +222,7 @@ contract ERC721 is Pausable, ERC165 {
      */
     function _exists(uint256 tokenId) internal view whenNotPaused returns (bool) {
         address owner = _tokenOwner[tokenId];
-        return owner != address(0);
+        return (owner != address(0));
     }
 
     /**
@@ -244,7 +244,7 @@ contract ERC721 is Pausable, ERC165 {
         //require(msg.sender == super.(super._owner), "Only contract owner can mint new tokens");
 
         // TODO revert if given tokenId already exists or given address is invalid
-        require(_exists(tokenId), "Canot mint - Token ID already exists");
+        require(!_exists(tokenId), "Canot mint - Token ID already exists");
         require(isValidAddress(to), "Cannot mint - Given 'to' address is not valid");
 
         // TODO mint tokenId to given address & increase token count of owner

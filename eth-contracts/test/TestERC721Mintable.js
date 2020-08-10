@@ -6,14 +6,15 @@ contract('TestERC721Mintable', accounts => {
     const account_two = accounts[1];
     const account_three = accounts[2];
 
+    
+
     describe('match erc721 spec', function () {
         beforeEach(async function () { 
             this.contract = await ERC721MintableComplete.new({from: account_one});
-
             // TODO: mint multiple tokens
-            var result1 = await this.contract.mint().send(account_one, 123, {from: account_one});
-            var result2 = await this.contract.mint().send(account_two, 456, {from: account_one});
-            var result3 = await this.contract.mint().send(account_three, 789, {from: account_one});
+            var result1 = await this.contract.mint(account_one, 123).send({from: account_one});
+            var result2 = await this.contract.mint(account_two, 456).send({from: account_one});
+            var result3 = await this.contract.mint(account_three, 789).send({from: account_one});
         })
 
         it('should return total supply', async function () { 
@@ -49,7 +50,7 @@ contract('TestERC721Mintable', accounts => {
         })
 
         it('should fail when minting when address is not contract owner', async function () { 
-            var result = await this.contract.mint().send(account_one, 123, {from: account_two});
+            var result = await this.contract.mint(account_one, 123).send({from: account_two});
 
             assert.equal(result, false, "Only contract owner can mint new tokens");
         })
