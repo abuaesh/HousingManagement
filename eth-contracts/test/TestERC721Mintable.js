@@ -35,6 +35,10 @@ contract('TestERC721Mintable', accounts => {
         })
 
         it('should transfer token from one owner to another', async function () { 
+            await transferFrom(account_one, account_two, 123).send({from: account_one});
+            var new_owner = await ownerOf(123).call();
+
+            assert.equal(new_owner, account_two);
             
         })
     });
