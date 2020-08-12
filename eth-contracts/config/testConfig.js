@@ -16,9 +16,9 @@ var Config = async function(accounts) {
     let contract = await ERC721MintableComplete.new({from: owner});
 
     // TODO: mint multiple tokens
-    var result1 = await contract.mint(account_one, 123).send({from: owner});
-    var result2 = await contract.mint(account_two, 456).send({from: owner});
-    var result3 = await contract.mint(account_three, 789).send({from: owner});
+    var result1 = await contract.mint(account_one, 123, {from: owner});
+    var result2 = await contract.mint(account_two, 456, {from: owner});
+    var result3 = await contract.mint(account_three, 789, {from: owner});
     
     return {
         owner: owner,

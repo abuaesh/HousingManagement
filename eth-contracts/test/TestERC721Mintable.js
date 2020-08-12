@@ -10,13 +10,13 @@ contract('TestERC721Mintable', async(accounts) => {
     describe('match erc721 spec', function () {
 
         it('should return total supply', async function () { 
-            var totalSupply = await config.contract.totalSupply().call();
+            var totalSupply = await config.contract.totalSupply();
             console.log("Total supply of tokens is: " + totalSupply);
             assert.equal(totalSupply, 3, "Total supply of tokens does not match expected supply");
         })
 
         it('should get token balance', async function () { 
-            var account_one_balance = await config.contract.balanceOf(config.account_one).call({from: config.account_one});
+            var account_one_balance = await config.contract.balanceOf(config.account_one);//.call({from: config.account_one});
             assert.equal(account_one_balance, 1, "Balance token does not match expected balance");
         })
 
