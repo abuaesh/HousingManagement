@@ -32,6 +32,10 @@ contract Ownable {
 
     }
 
+    function getContractOwner() public view returns(address){
+        return _owner;
+    }
+
     // Function to check that the given address is a real address        
     function isValidAddress(address _address) public pure returns (bool){  
         return _address != address(0); //Address should not be all zero

@@ -23,7 +23,7 @@ contract('TestERC721Mintable', async(accounts) => {
         // token uri should be complete i.e: https://s3-us-west-2.amazonaws.com/udacity-blockchain/capstone/1
         it('should return token uri', async function () { 
             var known_uri = "https://s3-us-west-2.amazonaws.com/udacity-blockchain/capstone/456";
-            var retrieved_uri = await config.contract.tokenURI(456).call();
+            var retrieved_uri = await config.contract.tokenURI(456);
             assert.equal(known_uri, retrieved_uri, "Retrieved URI does not match expected URI");
         })
 
@@ -39,12 +39,15 @@ contract('TestERC721Mintable', async(accounts) => {
     describe('have ownership properties', function () {
 
         it('should fail when minting when address is not contract owner', async function () { 
-            var result = await config.contract.mint(config.account_two, 123).send({from: config.owner});
+            var result = await config.contract.mint(config.account_two, 123, {from: config.account_one});
 
             assert.equal(result, false, "Only contract owner can mint new tokens");
         })
 
         it('should return contract owner', async function () { 
+            var result = await config.contract.getContractOwner();
+
+            assert.equal(result, config.owner, "Contract Owner not returned correctly")
             
         })
 
