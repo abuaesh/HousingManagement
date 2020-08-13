@@ -16,7 +16,8 @@ contract Ownable {
     }
     //  3) create an 'onlyOwner' modifier that throws if called by any account other than the owner.
     modifier onlyOwner() {
-        if (msg.sender == _owner) _;
+        require(msg.sender == _owner, "Only owner can call this function");
+        _;
     }
     //  4) fill out the transferOwnership function - Done!
 

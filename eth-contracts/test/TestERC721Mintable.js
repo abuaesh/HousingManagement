@@ -39,9 +39,13 @@ contract('TestERC721Mintable', async(accounts) => {
     describe('have ownership properties', function () {
 
         it('should fail when minting when address is not contract owner', async function () { 
-            var result = await config.contract.mint(config.account_two, 123, {from: config.account_one});
+            try{
+                var result = await config.contract.mint(config.account_two, 123, {from: config.account_one});
+            }catch(error){
+                let msg = "Only owner can call this function";
+                assert.include(error.message, msg, "Only contract owner can mint new tokens");
+            }
 
-            assert.equal(result, false, "Only contract owner can mint new tokens");
         })
 
         it('should return contract owner', async function () { 
