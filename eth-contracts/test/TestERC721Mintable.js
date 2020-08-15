@@ -44,6 +44,7 @@ contract('TestERC721Mintable', async(accounts) => {
             }catch(error){
                 let msg = "Only owner can call this function";
                 assert.include(error.message, msg, "Only contract owner can mint new tokens");
+                //OR: assert.equal(error.reason, msg, "Only contract owner can mint new tokensd)
             }
 
         })
