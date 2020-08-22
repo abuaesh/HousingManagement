@@ -2,7 +2,7 @@
 var SquareVerifier = artifacts.require('./../../zokrates/code/square/verifier.sol');
 var SampleProof = require('./../../zokrates/code/square/proof.json');
 
-contract('TestERC721Mintable', async() => {
+contract('TestSquareVerifier', async() => {
 
   describe('match square verifier spec', function () {
     // Test verification with correct proof
@@ -44,6 +44,11 @@ contract('TestERC721Mintable', async() => {
       };
       var result = await SquareVerifier.verifyTx(FalseSample.proof.a, FalseSample.proof.b, FalseSample.proof.c, FalseSample.inputs);
       assert.equal(result, false, "Failed to reject a false proof");
+    }) 
+    // Test verification with incorrect proof
+    it('should return false for repeated proof', async function () { 
+      var result = await SquareVerifier.verifyTx(SampleProof.proof.a, SampleProof.proof.b, SampleProof.proof.c, SampleProof.inputs);
+      assert.equal(result, false, "Failed to reject a repeated proof");
+    }) 
   }) 
-  }
-}
+})
