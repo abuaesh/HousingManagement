@@ -10,15 +10,14 @@ contract('TestERC721Mintable', async() => {
     // - use the contents from proof.json generated from zokrates steps
     it('should return true for correct proof', async function () { 
         var result = await SquareVerifier.verifyTx(proof.a, proof.b, proof.c, proof.input);
-        console.log("Total supply of tokens is: " + totalSupply);
-        assert.equal(totalSupply, 3, "Total supply of tokens does not match expected supply");
+        assert.equal(result, true, "Failed to verify a true proof");
     }) 
         
     // Test verification with incorrect proof
     it('should return false for incorrect proof', async function () { 
-      var totalSupply = await config.contract.totalSupply();
-      console.log("Total supply of tokens is: " + totalSupply);
-      assert.equal(totalSupply, 3, "Total supply of tokens does not match expected supply");
+      
+      var result = await SquareVerifier.verifyTx(proof.a, proof.b, proof.c, proof.input);
+      assert.equal(result, true, "Failed to verify a true proof");
   }) 
   }
 }
