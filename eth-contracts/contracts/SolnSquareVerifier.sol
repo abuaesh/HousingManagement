@@ -46,21 +46,18 @@ function addSolution(Solution memory sol) public{
 // TODO Create a function to mint new NFT only after the solution has been verified
 //  - make sure the solution is unique (has not been used before)
 //  - make sure you handle metadata as well as tokenSupply
-function mintTokens(uint Id) public
+function mintTokens(
+    uint Id,
+    uint[2] memory a,
+    uint[2][2] memory b,
+    uint[2] memory c, uint[2] memory input) public
 {
     Solution memory sol = uniqueSolutions[Id];
     require(!sol.isValue, "Solution is not unique.");
-    require(verify(), "Cannot mint a new token- Verification failed");
-    Solution memory s = Solution(Id, msg.sender, true);
-    addSolution(s);
+    require(squareVerifier.verifyTx(a, b, c, input), "Cannot mint a new token- Verification failed");
+    sol = Solution(Id, msg.sender, true);
+    addSolution(sol);
     super.mint(msg.sender, Id);
-}
-
-function verify(string memory proof) internal returns(bool)
-{
-    
-    return squareVerifier.verifyTx();
-
 }
 
 }//end contract
