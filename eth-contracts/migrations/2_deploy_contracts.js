@@ -17,7 +17,7 @@ module.exports = function(deployer) {
                             solnAddress: SolnSquareVerifier.address
                         }
                     }
-                    //fs.writeFileSync(__dirname + '/../src/dapp/config.json',JSON.stringify(config, null, '\t'), 'utf-8');
+                    //fs.writeFileSync(__dirname + '/../config.json',JSON.stringify(config, null, '\t'), 'utf-8');
                     //fs.writeFileSync(__dirname + '/../src/server/config.json',JSON.stringify(config, null, '\t'), 'utf-8');
                 });
     });
