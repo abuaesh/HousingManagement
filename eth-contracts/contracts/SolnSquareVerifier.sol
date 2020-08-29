@@ -37,8 +37,11 @@ constructor(address verifierAddress) public
 
 
 // TODO Create a function to add the solutions to the array and emit the event
-function addSolution(Solution memory sol) public{
+function addSolution(uint Id, address owner) public{
     //solutions.push(sol);
+    Solution memory sol = uniqueSolutions[Id];
+    require(!sol.isValue, "Solution is not unique.");
+    sol = Solution(Id, owner, true);
     uniqueSolutions[sol._index] = sol;
     emit SolutionAdded(sol._index, sol._address);
 }
@@ -52,11 +55,8 @@ function mintTokens(
     uint[2][2] memory b,
     uint[2] memory c, uint[2] memory input) public
 {
-    Solution memory sol = uniqueSolutions[Id];
-    require(!sol.isValue, "Solution is not unique.");
     require(squareVerifier.verifyTx(a, b, c, input), "Cannot mint a new token- Verification failed");
-    sol = Solution(Id, msg.sender, true);
-    addSolution(sol);
+    addSolution(Id, msg.sender);
     super.mint(msg.sender, Id);
 }
 
