@@ -55,13 +55,14 @@ function mintTokens(
         uint Id,
         uint[2] memory a,
         uint[2][2] memory b,
-        uint[2] memory c, uint[2] memory input) 
+        uint[2] memory c, uint[1] memory input) 
     public
-    returns(bool result)
+    returns(bool)
 {
     require(squareVerifier.verifyTx(a, b, c, input), "Cannot mint a new token- Verification failed");
     addSolution(Id, msg.sender);
-    result = super.mint(msg.sender, Id);
+    bool result = mint(msg.sender, Id);
+    return result;
 }
 
 }//end contract
