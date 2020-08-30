@@ -26,8 +26,7 @@ contract('TestSolnSquareVerifier', async(accounts) => {
     // Test if an ERC721 token can be minted for contract - SolnSquareVerifier
     it('should mint new token by ERC721', async function () {
         let _id = 3456;
-        var result = await this.solnSV.mintTokens(_id, SampleProof.proof.a, SampleProof.proof.b, SampleProof.proof.c, SampleProof.inputs);
-        console.log(JSON.stringify(result));
+        var result = await this.solnSV.mintTokens.call(_id, SampleProof.proof.a, SampleProof.proof.b, SampleProof.proof.c, SampleProof.inputs);
         assert.equal(result, true, "Failed to mint a new token"); 
     })
   })
