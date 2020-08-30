@@ -49,15 +49,19 @@ function addSolution(uint Id, address owner) public{
 // TODO Create a function to mint new NFT only after the solution has been verified
 //  - make sure the solution is unique (has not been used before)
 //  - make sure you handle metadata as well as tokenSupply
+//      -returns a true boolean upon completion of the function
+//      -calls the superclass mint function
 function mintTokens(
-    uint Id,
-    uint[2] memory a,
-    uint[2][2] memory b,
-    uint[2] memory c, uint[2] memory input) public
+        uint Id,
+        uint[2] memory a,
+        uint[2][2] memory b,
+        uint[2] memory c, uint[2] memory input) 
+    public
+    returns(bool result)
 {
     require(squareVerifier.verifyTx(a, b, c, input), "Cannot mint a new token- Verification failed");
     addSolution(Id, msg.sender);
-    super.mint(msg.sender, Id);
+    result = super.mint(msg.sender, Id);
 }
 
 }//end contract

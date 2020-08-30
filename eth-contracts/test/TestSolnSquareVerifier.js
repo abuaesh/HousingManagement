@@ -1,6 +1,6 @@
 var SquareVerifier = artifacts.require("Verifier");
 var SolnSquareVerifier = artifacts.require("SolnSquareVerifier");
-//var SampleProof = require('../../zokrates/code/square/proof1_1');
+var SampleProof = require('../../zokrates/code/square/proof1_1');
 //var FalseSample = require('../../zokrates/code/square/notproof3_5');
 const truffleAssert = require('truffle-assertions');
 
@@ -24,7 +24,11 @@ contract('TestSolnSquareVerifier', async(accounts) => {
     })
 
     // Test if an ERC721 token can be minted for contract - SolnSquareVerifier
-    it('should mint new token by ERC721', async function () { 
+    it('should mint new token by ERC721', async function () {
+        let _id = 3456;
+        var result = await this.solnSV.mintTokens(_id, SampleProof.proof.a, SampleProof.proof.b, SampleProof.proof.c, SampleProof.inputs);
+        console.log(JSON.stringify(result));
+        assert.equal(result, true, "Failed to mint a new token"); 
     })
   })
 })
