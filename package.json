@@ -1,10 +1,10 @@
 {
-  "name": "capstone",
+  "name": "housingmanagement",
   "version": "1.0.0",
   "description": "This is a blockchain-based decentralized house listing service. I built this repo is for Udacity's capstone project. It builds upon the knowledge I gained in the nanodegree course in order to build a decentralized housing product.  \r In this project, proprietary tokens are minted to represent titles to the properties. Before minting a token, it verifies that the property is rightfully owned by claiming client(i.e. me, or whoever is running the DAPP). I used zk-SNARKs to create a verification system which can prove title ownership to the property without revealing that specific information on the property.",
   "main": "index.js",
   "scripts": {
-    "dev": "lite-server",
+    "dapp": "node dapp/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
