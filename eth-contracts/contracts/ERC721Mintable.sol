@@ -575,10 +575,16 @@ contract ERC721MintableComplete is ERC721Metadata{
     //      --removed parameter tokenURI, coz it will be created by super._setTokenURI
     //      -returns a true boolean upon completion of the function
     //      -calls the superclass mint and setTokenURI functions
+    //      -emits an event with token URI so it can be accessed by the caller/owner/whoever listening
 
+    event NewTokenMinted(address indexed owner, string indexed uri);
+    
     function mint(address to, uint256 tokenId) public onlyOwner returns (bool){
         super._mint(to, tokenId);
-        super._setTokenURI(tokenId);
+        string memory uri = super._setTokenURI(tokenId);
+
+        emit NewTokenMinted(to, uri);
+
         return true;
     }
 
