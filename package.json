@@ -4,16 +4,23 @@
   "description": "This is a blockchain-based decentralized house listing service. I built this repo is for Udacity's capstone project. It builds upon the knowledge I gained in the nanodegree course in order to build a decentralized housing product.  \r In this project, proprietary tokens are minted to represent titles to the properties. Before minting a token, it verifies that the property is rightfully owned by claiming client(i.e. me, or whoever is running the DAPP). I used zk-SNARKs to create a verification system which can prove title ownership to the property without revealing that specific information on the property.",
   "main": "index.js",
   "scripts": {
-    "dapp": "node dapp/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dapp": "webpack-dev-server --mode development --config webpack.config.dapp.js",
+    "test": "truffle test /eth-contracts"
   },
   "keywords": [],
   "author": "pk <pkrasam@gmail.com> (https://ipfs.infura.io/ipfs/QmSXiR9Khm3yo1J67nUopvVBxFJ8YGN2fUGZ34Etr3m92x/)",
   "license": "MIT",
   "devDependencies": {
-    "lite-server": "2.4.0"
+    "lite-server": "2.4.0",
+    "openzeppelin-solidity": "^1.10.0",
+    "truffle": "5.0.2",
+    "truffle-hdwallet-provider": "1.0.2",
+    "web3": "1.0.0-beta.37"
   },
   "dependencies": {
+    "babel-polyfill": "^6.26.0",
+    "dotenv": "^8.2.0",
+    "html-webpack-plugin": "^4.4.1",
     "openzeppelin-solidity": "^2.5.1",
     "solc": "^0.5.2",
     "solc-js": "^0.5.2",
