@@ -2742,9 +2742,9 @@
           }
         ],
         "contractDependencies": [
+          178,
           79,
-          132,
-          178
+          132
         ],
         "contractKind": "contract",
         "documentation": null,
@@ -9270,10 +9270,10 @@
           }
         ],
         "contractDependencies": [
+          178,
           79,
-          132,
           682,
-          178
+          132
         ],
         "contractKind": "contract",
         "documentation": null,
@@ -12943,11 +12943,11 @@
           }
         ],
         "contractDependencies": [
-          79,
           980,
-          132,
-          682,
           178,
+          79,
+          682,
+          132,
           7489
         ],
         "contractKind": "contract",
@@ -14487,12 +14487,12 @@
           }
         ],
         "contractDependencies": [
-          79,
           980,
           1106,
-          132,
-          682,
           178,
+          79,
+          682,
+          132,
           7489
         ],
         "contractKind": "contract",
@@ -17373,9 +17373,9 @@
           }
         ],
         "contractDependencies": [
+          178,
           79,
-          132,
-          178
+          132
         ],
         "contractKind": "contract",
         "documentation": null,
@@ -23901,10 +23901,10 @@
           }
         ],
         "contractDependencies": [
+          178,
           79,
-          132,
           682,
-          178
+          132
         ],
         "contractKind": "contract",
         "documentation": null,
@@ -27574,11 +27574,11 @@
           }
         ],
         "contractDependencies": [
-          79,
           980,
-          132,
-          682,
           178,
+          79,
+          682,
+          132,
           7489
         ],
         "contractKind": "contract",
@@ -29118,12 +29118,12 @@
           }
         ],
         "contractDependencies": [
-          79,
           980,
           1106,
-          132,
-          682,
           178,
+          79,
+          682,
+          132,
           7489
         ],
         "contractKind": "contract",
@@ -29848,7 +29848,7 @@
   },
   "networks": {},
   "schemaVersion": "3.0.23",
-  "updatedAt": "2020-09-08T18:20:10.864Z",
+  "updatedAt": "2020-09-12T18:29:04.874Z",
   "devdoc": {
     "methods": {
       "isApprovedForAll(address,address)": {

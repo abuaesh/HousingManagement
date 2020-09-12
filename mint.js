@@ -23,20 +23,8 @@ const FACTORY_ABI = //require('./eth-contracts/build/contracts/ERC721MintableCom
             "type": "uint256"
           },
           {
-            "name": "a",
-            "type": "uint256[2]"
-          },
-          {
-            "name": "b",
-            "type": "uint256[2][2]"
-          },
-          {
-            "name": "c",
-            "type": "uint256[2]"
-          },
-          {
-            "name": "input",
-            "type": "uint256[1]"
+            "name": "To",
+            "type": "address"
           }
         ],
         "name": "mintTokens",
