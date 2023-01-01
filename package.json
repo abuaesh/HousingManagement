@@ -20,7 +20,7 @@
   "dependencies": {
     "babel-polyfill": "^6.26.0",
     "dotenv": "^8.2.0",
-    "html-webpack-plugin": "^4.4.1",
+    "html-webpack-plugin": "^5.5.0",
     "openzeppelin-solidity": "^2.5.1",
     "solc": "^0.5.2",
     "solc-js": "^0.5.2",
